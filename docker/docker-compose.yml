@@ -1,0 +1,14 @@
+version: "3.1"
+
+services:
+  backend:
+    image: node:14-alpine
+    user: node
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ../:/home/node/app/
+    restart: always
+    command:
+      npm start
