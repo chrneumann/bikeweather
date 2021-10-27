@@ -5,7 +5,7 @@ app("cmd.pollWeather").call();
 
 const sendWeather = () => {
   app("cmd.sendWeatherNotifications").call();
-  setTimeout(sendWeather, 30 * 60 * 1000);
+  setTimeout(sendWeather, 60 * 60 * 1000);
 };
 
 sendWeather();

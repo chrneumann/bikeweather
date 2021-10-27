@@ -1,6 +1,3 @@
-/// <reference types="../types/@cicciosgamino/openweather-apis" />
-import { AsyncWeather } from "@cicciosgamino/openweather-apis";
-
 import { Store, Weather } from "~/types";
 
 export default class WeatherStore {
@@ -10,18 +7,18 @@ export default class WeatherStore {
   }
 
   async load(city: string): Promise<Weather> {
-    const apiKey = "4199b6fb4a162371725b9a06c92306e7";
-    const weather = await new AsyncWeather();
-    weather.setLang("de");
-    weather.setCity(city);
-    weather.setUnits("metric");
-    weather.setApiKey(apiKey);
-    const allWeather = await weather.getAllWeather();
-    console.log(allWeather);
+    return (await this._store.load("weather.json"))[city];
+  }
 
-    return {
-      temperature: allWeather.main.temp,
-    };
+  async store(city: string, weather: Weather) {
+    let oldWeather = null;
+    try {
+      oldWeather = await this._store.load("weather.json");
+    } catch (error) {
+      oldWeather = {};
+    }
+    oldWeather[city] = weather;
+    return this._store.store("weather.json", oldWeather);
   }
 
   // async store(users : Users)  {

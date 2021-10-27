@@ -1,4 +1,4 @@
-/// <reference types="../types/@cicciosgamino/openweather-apis" />
+/// <reference types="../types" />
 
 import Slimbot from "slimbot";
 

@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/chrneumann/bikeweather#readme",
   "dependencies": {
-    "@cicciosgamino/openweather-apis": "^5.0.1",
+    "axios": "^0.24.0",
     "express": "^4.17.1",
     "slimbot": "^5.1.0"
   },

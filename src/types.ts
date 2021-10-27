@@ -6,7 +6,24 @@ type User = {
 type Users = { [index: string]: User };
 
 type Weather = {
-  temperature: number;
+  forecast: {
+    time: number;
+    feelsLike: {
+      day: number;
+      night: number;
+      eve: number;
+      morn: number;
+    };
+    wind: {
+      speed: number;
+      deg: number;
+      gust: number;
+    };
+    gust: {
+      propability: number;
+      amount: number;
+    };
+  }[];
 };
 
 interface Store {
@@ -15,6 +32,9 @@ interface Store {
 }
 
 type Config = {
+  openWeather: {
+    apiKey: string;
+  };
   telegram: {
     botApiKey: string;
   };

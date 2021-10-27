@@ -1,4 +1,7 @@
 {
+  "openWeather": {
+    "apiKey": ""
+  },
   "telegram": {
     "botApiKey": ""
   }

@@ -18,7 +18,8 @@ const deps: Dependencies = {
     return new SendWeatherNotifications(
       app("store.users"),
       app("communication.telegram"),
-      app("store.weather")
+      app("store.weather"),
+      app("weather.fetch")
     );
   },
 };
