@@ -57,7 +57,7 @@ export default class SendWeatherNotifications {
       Object.keys(oldForecast.feelsLike).forEach((v) => {
         // console.log(v);
         const diff =
-          (oldForecast as any).feelsLike[v] - (newForecast as any).feelsLike[v];
+          (newForecast as any).feelsLike[v] - (oldForecast as any).feelsLike[v];
         if (Math.abs(diff) >= 3) {
           changes += `🌡️ Its getting ${
             diff > 0 ? "warmer" : "colder"
@@ -68,7 +68,7 @@ export default class SendWeatherNotifications {
         }
       });
 
-      let diff = oldForecast.wind.speed - newForecast.wind.speed;
+      let diff =  newForecast.wind.speed - oldForecast.wind.speed;
       if (Math.abs(diff) >= 3) {
         changes += `🌬️ Its getting ${diff > 0 ? "more" : "less"} windy: ${
           newForecast.wind.speed * 3.6
@@ -76,7 +76,7 @@ export default class SendWeatherNotifications {
         oldForecast.wind.speed = newForecast.wind.speed;
       }
 
-      diff = oldForecast.gust.propability - newForecast.gust.propability;
+      diff = newForecast.gust.propability - oldForecast.gust.propability;
       if (Math.abs(diff) >= 0.3) {
         changes += `🌧️ Its getting ${
           diff > 0 ? "more" : "less"
