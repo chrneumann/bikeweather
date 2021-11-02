@@ -35,7 +35,6 @@ export default class SendWeatherNotifications {
     });
 
     Object.keys(cities).forEach(async (city) => {
-      // console.log(city);
       let oldWeather = null;
       try {
         oldWeather = await this._weather.load(city);
@@ -43,11 +42,10 @@ export default class SendWeatherNotifications {
         console.log(error);
       }
       const newWeather = await this._weatherFetch.fetch(city);
-      if (oldWeather === null) {
+      if (!oldWeather) {
         this._weather.store(city, newWeather);
         return;
       }
-      // console.log(oldWeather.forecast[1], newWeather.forecast[1]);
 
       const oldForecast = oldWeather.forecast[1];
       const newForecast = newWeather.forecast[1];
@@ -55,7 +53,6 @@ export default class SendWeatherNotifications {
       let changes = "";
 
       Object.keys(oldForecast.feelsLike).forEach((v) => {
-        // console.log(v);
         const diff =
           (newForecast as any).feelsLike[v] - (oldForecast as any).feelsLike[v];
         if (Math.abs(diff) >= 3) {

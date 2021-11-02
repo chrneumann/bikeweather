@@ -20,7 +20,6 @@ export default class Fetch {
       }
     );
     const weather = response.data as any;
-    // console.log(weather);
     const forecast = (
       await axios.get("https://api.openweathermap.org/data/2.5/onecall", {
         params: {
@@ -33,8 +32,6 @@ export default class Fetch {
       })
     ).data as any;
     const retForecast = forecast.daily.map((forecast: any) => {
-      // console.log(new Date(forecast.dt * 1000));
-      // console.log(forecast);
       return {
         time: forecast.dt * 1000,
         feelsLike: forecast.feels_like,
