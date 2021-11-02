@@ -63,28 +63,34 @@ export default class SendWeatherNotifications {
             diff > 0 ? "warmer" : "colder"
           } in the ${v}: ${
             (<any>newForecast).feelsLike[v]
-          }° C felt temperature predicted tomorrow!\n`;
+          }° C felt temperature\n`;
           (<any>oldForecast).feelsLike[v] = (<any>newForecast).feelsLike[v];
         }
       });
 
-      let diff =  newForecast.wind.speed - oldForecast.wind.speed;
+      let diff = newForecast.wind.speed - oldForecast.wind.speed;
       if (Math.abs(diff) >= 3) {
         changes += `🌬️ Its getting ${diff > 0 ? "more" : "less"} windy: ${
           newForecast.wind.speed * 3.6
-        } km/h predicted tomorrow!\n`;
+        } km/h\n`;
         oldForecast.wind.speed = newForecast.wind.speed;
       }
 
       diff = newForecast.gust.propability - oldForecast.gust.propability;
-      if (Math.abs(diff) >= 0.3) {
-        changes += `🌧️ Its getting ${
-          diff > 0 ? "more" : "less"
-        } likely to rain: ${
+      const amountDiff = newForecast.gust.amount - oldForecast.gust.amount;
+      if (Math.abs(diff) >= 0.3 || Math.abs(amountDiff) >= 3) {
+        changes += `🌧️ It's getting ${
+          amountDiff > 0 ? "more" : "less"
+        } rainy: ${newForecast.gust.amount}mm, ${
           newForecast.gust.propability * 100
-        }% predicted tomorrow!\n`;
+        }%\n`;
         oldForecast.gust.propability = newForecast.gust.propability;
+        oldForecast.gust.amount = newForecast.gust.amount;
       }
+
+      const dateString = new Intl.DateTimeFormat("en", {
+        dateStyle: "medium",
+      }).format(new Date(newForecast.time));
 
       if (changes !== "") {
         cities[city].forEach(async (userKey) => {
@@ -93,7 +99,8 @@ export default class SendWeatherNotifications {
             .getBot()
             .sendMessage(
               user.telegramChatId,
-              `🚲 Bike weather update for ${user.city}:\n` + changes
+              `🚲 Bike weather update for ${user.city}. The weather is predicted to change tomorrow (${dateString}):\n` +
+                changes
             );
         });
 

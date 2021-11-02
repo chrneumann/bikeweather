@@ -45,7 +45,7 @@ export default class Fetch {
         },
         gust: {
           propability: forecast.pop,
-          amount: forecast.rain + forecast.snow,
+          amount: (forecast.rain || 0) + (forecast.snow || 0),
         },
       };
     });
